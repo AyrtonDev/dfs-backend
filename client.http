@@ -1,0 +1,5 @@
+@baseUrl = http://localhost:3333
+
+# Hearth check
+# @name healthCheck
+GET {{baseUrl}}/health
