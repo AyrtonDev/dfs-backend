@@ -3,3 +3,20 @@
 # Hearth check
 # @name healthCheck
 GET {{baseUrl}}/health
+
+###
+
+# create account
+# @name createAccount
+POST {{baseUrl}}/signup
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "teste",
+  "email": "teste@mail.com",
+  "password": "123456",
+  "passwordConfirmation": "123456"
+}
+
+###
