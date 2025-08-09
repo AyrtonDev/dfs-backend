@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "start": "node --env-file .env --experimental-strip-types --no-warnings --watch src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "devDependencies": {
     "@types/node": "^24.2.1",
     "eslint": "^9.33.0",
@@ -17,6 +19,12 @@
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "git-commit-msg-linter": "^5.0.8",
     "prettier": "^3.6.2",
+    "tsx": "^4.20.3",
     "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "fastify": "^5.4.0",
+    "fastify-type-provider-zod": "^5.0.3",
+    "zod": "^4.0.17"
   }
 }
