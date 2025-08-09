@@ -12,7 +12,11 @@
   "type": "commonjs",
   "devDependencies": {
     "@types/node": "^24.2.1",
+    "eslint": "^9.33.0",
+    "eslint-config-love": "^121.0.0",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
     "git-commit-msg-linter": "^5.0.8",
+    "prettier": "^3.6.2",
     "typescript": "^5.9.2"
   }
 }
