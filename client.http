@@ -34,3 +34,18 @@ Content-Type: application/json
 }
 
 ###
+
+@token = {{loginAccount.response.body.$.token}}
+
+###
+
+# List movies
+
+# @name listMovies
+POST {{baseUrl}}/movies
+Accept: application/json
+Content-Type: application/json
+
+{
+  
+}
