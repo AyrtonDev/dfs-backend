@@ -1,22 +1,17 @@
 import { FastifyPluginCallbackZod } from 'fastify-type-provider-zod'
-import z from 'zod'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import { db } from '../../db/connection'
 import { accounts } from '../../db/schemas/accounts'
 import { eq } from 'drizzle-orm'
 import { env } from '../../env'
+import { loginSchema } from './schemas/login'
 
 export const loginRoute: FastifyPluginCallbackZod = app => {
   app.post(
     '/login',
     {
-      schema: {
-        body: z.object({
-          email: z.email(),
-          password: z.string().min(6),
-        }),
-      },
+      schema: loginSchema,
     },
     async (request, reply) => {
       try {
