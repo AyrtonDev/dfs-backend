@@ -9,6 +9,7 @@ import { signUpRoute } from './routes/login/signup'
 import fastifyMultipart from '@fastify/multipart'
 import fastifyCors from '@fastify/cors'
 import { loginRoute } from './routes/login/login'
+import multipart from 'fastify-multipart'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -19,6 +20,7 @@ app.register(fastifyCors, {
 app.register(fastifyMultipart)
 app.setSerializerCompiler(serializerCompiler)
 app.setValidatorCompiler(validatorCompiler)
+app.register(multipart)
 
 app.get('/health', () => {
   return 'OK'
