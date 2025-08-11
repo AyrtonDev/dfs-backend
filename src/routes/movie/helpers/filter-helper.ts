@@ -1,29 +1,36 @@
-import { or } from 'drizzle-orm'
+import { or, gte, lte, eq, ilike } from 'drizzle-orm'
+import { MoviesListParams } from '../schemas/list'
+import { movies } from '../../../db/schemas/movies'
 
-export const applyFiltersHelper = (
+function formatDate(date: Date): string {
+  return date.toISOString().split('T')[0]
+}
+
+export const applyMoviesFiltersHelper = (
   query: any,
-  filter: any,
-  schema: any,
+  filter: MoviesListParams,
 ): any => {
   if (filter.duration) {
     if (filter.duration.min !== undefined)
-      query = query.where(schema.duration.gte(filter.duration.min))
+      query = query.where(gte(movies.duration, filter.duration.min))
     if (filter.duration.max !== undefined)
-      query = query.where(schema.duration.lte(filter.duration.max))
+      query = query.where(lte(movies.duration, filter.duration.max))
   }
   if (filter.release) {
     if (filter.release.start)
       query = query.where(
-        schema.releaseDate.gte(new Date(filter.release.start)),
+        gte(movies.releaseDate, formatDate(filter.release.start)),
       )
     if (filter.release.end)
-      query = query.where(schema.releaseDate.lte(new Date(filter.release.end)))
+      query = query.where(
+        lte(movies.releaseDate, formatDate(filter.release.end)),
+      )
   }
-  if (filter.genre) query = query.where(schema.genre.eq(filter.genre))
+  if (filter.genre) query = query.where(eq(movies.genre, filter.genre))
   if (filter.searchTerm) {
     const term = `%${filter.searchTerm.toLowerCase()}%`
     query = query.where(
-      or(schema.title.ilike(term), schema.originalTitle(term)),
+      or(ilike(movies.title, term), ilike(movies.originalTitle, term)),
     )
   }
   return query
