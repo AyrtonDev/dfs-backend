@@ -20,6 +20,9 @@ await seed(db, schema).refine(f => {
         imageUrl: f.default({ defaultValue: images.example }),
       },
     },
+    accounts: {
+      count: 0,
+    },
   }
 })
 
