@@ -27,8 +27,8 @@ app.register(signUpRoute)
 
 const start = async () => {
   try {
-    await app.listen({ port: env.port })
-    console.log(`🚨 Server running at http://localhost:${env.port}`)
+    await app.listen({ port: env.PORT })
+    console.log(`🚨 Server running at http://localhost:${env.PORT}`)
   } catch (err) {
     app.log.error(err)
     process.exit(1)
