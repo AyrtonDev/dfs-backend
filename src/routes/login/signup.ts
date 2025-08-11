@@ -30,7 +30,7 @@ export const signUpRoute: FastifyPluginCallbackZod = app => {
 
         const hashedPassword = await bcrypt.hash(password, 12)
 
-        const account = await db
+        const [account] = await db
           .insert(accounts)
           .values({
             name,
@@ -39,7 +39,7 @@ export const signUpRoute: FastifyPluginCallbackZod = app => {
           })
           .returning()
 
-        const token = jwt.sign({ email: account[0].email }, env.JWT_SECRET)
+        const token = jwt.sign({ email: account.email }, env.JWT_SECRET)
 
         return reply.status(201).send({ token: token })
       } catch (err) {
