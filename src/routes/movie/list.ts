@@ -2,32 +2,15 @@ import { FastifyPluginCallbackZod } from 'fastify-type-provider-zod'
 import z from 'zod'
 import { movies } from '../../db/schemas/movies'
 import { db } from '../../db/connection'
-import { applyFiltersHelper } from './helpers/filter-helper'
+import { applyMoviesFiltersHelper } from './helpers/filter-helper'
 import { sql } from 'drizzle-orm'
+import { moviesListSchema } from './schemas/list'
 
 export const moviesListRoute: FastifyPluginCallbackZod = app => {
   app.post(
     '/movies',
     {
-      schema: {
-        body: z.object({
-          duration: z
-            .object({
-              min: z.coerce.number().optional(),
-              max: z.coerce.number().optional(),
-            })
-            .optional(),
-          release: z
-            .object({
-              start: z.date().optional(),
-              end: z.date().optional(),
-            })
-            .optional(),
-          genre: z.string().optional(),
-          searchTerm: z.string().optional(),
-          pagination: z.coerce.number().optional().default(1),
-        }),
-      },
+      schema: moviesListSchema,
     },
     async (request, reply) => {
       try {
@@ -38,6 +21,7 @@ export const moviesListRoute: FastifyPluginCallbackZod = app => {
 
         let query = db
           .select({
+            id: movies.id,
             title: movies.title,
             imageUrl: movies.imageUrl,
             genre: movies.genre,
@@ -46,14 +30,14 @@ export const moviesListRoute: FastifyPluginCallbackZod = app => {
           })
           .from(movies)
 
-        query = applyFiltersHelper(query, filter, movies)
+        query = applyMoviesFiltersHelper(query, filter)
           .limit(limit)
           .offset(offset)
 
         const results = await query
 
         let countQuery = db.select({ count: sql`count(*)` }).from(movies)
-        countQuery = applyFiltersHelper(countQuery, filter, movies)
+        countQuery = applyMoviesFiltersHelper(countQuery, filter)
 
         const [countResult] = await countQuery
         const total = Number(countResult.count)
