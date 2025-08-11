@@ -8,6 +8,7 @@ import { env } from './env'
 import { signUpRoute } from './routes/login/signup'
 import fastifyMultipart from '@fastify/multipart'
 import fastifyCors from '@fastify/cors'
+import { loginRoute } from './routes/login/login'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -24,6 +25,7 @@ app.get('/health', () => {
 })
 
 app.register(signUpRoute)
+app.register(loginRoute)
 
 const start = async () => {
   try {
