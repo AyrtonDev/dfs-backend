@@ -20,3 +20,17 @@ Content-Type: application/json
 }
 
 ###
+
+# login account
+
+# @name loginAccount
+POST {{baseUrl}}/login
+Accept: application/json
+Content-Type: application/json
+
+{
+  "email": "teste@mail.com",
+  "password": "123456"
+}
+
+###
