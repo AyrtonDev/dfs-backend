@@ -1,8 +1,10 @@
-import type { FastifyPluginCallbackZod } from 'fastify-type-provider-zod'
+import { FastifyPluginCallbackZod } from 'fastify-type-provider-zod'
 import { z } from 'zod/v4'
 import bcrypt from 'bcrypt'
 import { db } from '../../db/connection'
 import { accounts } from '../../db/schemas/accounts'
+import jwt from 'jsonwebtoken'
+import { env } from '../../env'
 
 export const signUpRoute: FastifyPluginCallbackZod = app => {
   app.post(
@@ -37,11 +39,14 @@ export const signUpRoute: FastifyPluginCallbackZod = app => {
           })
           .returning()
 
-        console.log(account[0])
+        const token = jwt.sign({ email: account[0].email }, env.JWT_SECRET)
 
-        return reply.status(201).send('test')
+        return reply.status(201).send({ token: token })
       } catch (err) {
         console.log(err)
+        return reply
+          .status(500)
+          .send({ message: 'Something problem happened.' })
       }
     },
   )
