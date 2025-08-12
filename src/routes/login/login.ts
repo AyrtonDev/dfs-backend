@@ -23,12 +23,14 @@ export const loginRoute: FastifyPluginCallbackZod = app => {
           .where(eq(accounts.email, email))
 
         if (!account) {
-          return reply.status(401).send({ error: 'Invalid credentials' })
+          return reply
+            .status(401)
+            .send({ error: 'Usuário não possui cadastro' })
         }
 
         const isValidPassword = await bcrypt.compare(password, account.password)
         if (!isValidPassword) {
-          return reply.status(401).send({ error: 'Invalid credentials' })
+          return reply.status(401).send({ error: 'Credenciais inváslidas' })
         }
 
         const token = jwt.sign({ email: account.email }, env.JWT_SECRET)

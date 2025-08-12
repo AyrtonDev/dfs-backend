@@ -10,8 +10,8 @@ export const moviesListSchema = {
       .optional(),
     release: z
       .object({
-        start: z.date().optional(),
-        end: z.date().optional(),
+        from: z.string().optional(),
+        to: z.string().optional(),
       })
       .optional(),
     genre: z.string().optional(),

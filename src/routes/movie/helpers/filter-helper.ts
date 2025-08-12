@@ -2,10 +2,6 @@ import { or, gte, lte, eq, ilike } from 'drizzle-orm'
 import { MoviesListParams } from '../schemas/list'
 import { movies } from '../../../db/schemas/movies'
 
-function formatDate(date: Date): string {
-  return date.toISOString().split('T')[0]
-}
-
 export const applyMoviesFiltersHelper = (
   query: any,
   filter: MoviesListParams,
@@ -17,14 +13,10 @@ export const applyMoviesFiltersHelper = (
       query = query.where(lte(movies.duration, filter.duration.max))
   }
   if (filter.release) {
-    if (filter.release.start)
-      query = query.where(
-        gte(movies.releaseDate, formatDate(filter.release.start)),
-      )
-    if (filter.release.end)
-      query = query.where(
-        lte(movies.releaseDate, formatDate(filter.release.end)),
-      )
+    if (filter.release.from)
+      query = query.where(gte(movies.releaseDate, filter.release.from))
+    if (filter.release.to)
+      query = query.where(lte(movies.releaseDate, filter.release.to))
   }
   if (filter.genre) query = query.where(eq(movies.genre, filter.genre))
   if (filter.searchTerm) {

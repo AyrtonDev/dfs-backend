@@ -1,15 +1,16 @@
 import { FastifyPluginCallbackZod } from 'fastify-type-provider-zod'
-import z from 'zod'
 import { movies } from '../../db/schemas/movies'
 import { db } from '../../db/connection'
 import { applyMoviesFiltersHelper } from './helpers/filter-helper'
 import { sql } from 'drizzle-orm'
 import { moviesListSchema } from './schemas/list'
+import { authMiddleware } from '../../middlewares/authMiddleware'
 
 export const moviesListRoute: FastifyPluginCallbackZod = app => {
   app.post(
     '/movies',
     {
+      preHandler: [authMiddleware],
       schema: moviesListSchema,
     },
     async (request, reply) => {
