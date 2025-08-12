@@ -15,6 +15,7 @@ import { genresListRoute } from './routes/movie/all-genres'
 import { userRoute } from './routes/user/user'
 import { movieRoute } from './routes/movie/movie'
 import { uploadImageRoute } from './routes/images/uplaod'
+import { listImagesRoute } from './routes/images/list'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -40,6 +41,7 @@ app.register(genresListRoute)
 app.register(userRoute)
 app.register(movieRoute)
 app.register(uploadImageRoute)
+app.register(listImagesRoute)
 
 const start = async () => {
   try {
