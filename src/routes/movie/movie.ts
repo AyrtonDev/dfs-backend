@@ -1,5 +1,4 @@
 import { FastifyPluginCallbackZod } from 'fastify-type-provider-zod'
-import z from 'zod'
 import { movies } from '../../db/schemas/movies'
 import { db } from '../../db/connection'
 import { authMiddleware } from '../../middlewares/authMiddleware'
