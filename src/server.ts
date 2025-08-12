@@ -13,6 +13,7 @@ import { moviesListRoute } from './routes/movie/list'
 import fastifyJwt from '@fastify/jwt'
 import { genresListRoute } from './routes/movie/all-genres'
 import { userRoute } from './routes/user/user'
+import { movieRoute } from './routes/movie/movie'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -36,6 +37,7 @@ app.register(loginRoute)
 app.register(moviesListRoute)
 app.register(genresListRoute)
 app.register(userRoute)
+app.register(movieRoute)
 
 const start = async () => {
   try {
