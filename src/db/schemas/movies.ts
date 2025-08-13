@@ -15,6 +15,7 @@ export const movies = pgTable('movies', {
   imageUrl: varchar('image_url', { length: 255 }),
   description: text('description'),
   releaseDate: date('release_date'),
+  budge: varchar('budget'),
   duration: integer('duration'),
   genre: varchar('genre', { length: 100 }).notNull(),
   director: varchar('director', { length: 255 }),

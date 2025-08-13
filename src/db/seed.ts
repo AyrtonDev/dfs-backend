@@ -14,6 +14,7 @@ await seed(db, schema).refine(f => {
         originalTitle: f.jobTitle(),
         description: f.loremIpsum(),
         genre: f.firstName(),
+        budge: f.default({ defaultValue: 'R$ 30.000.000,00' }),
         director: f.fullName(),
         releaseDate: f.date(),
         duration: f.int({ minValue: 30, maxValue: 180 }),
