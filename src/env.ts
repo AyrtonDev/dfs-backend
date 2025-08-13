@@ -11,6 +11,7 @@ const envSchema = z.object({
   R2_ACCESS: z.string(),
   R2_SECRET: z.string(),
   R2_PUBLIC: z.url().startsWith('https://'),
+  EMAIL_FROM: z.email(),
 })
 
 export const env = envSchema.parse(process.env)
