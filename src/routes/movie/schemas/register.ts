@@ -6,6 +6,7 @@ export const registerMovieSchema = {
     originalTitle: z.string().optional().default(''),
     imageUrl: z.url('URL invalid').default(''),
     description: z.string().default(''),
+    budge: z.string().optional(),
     releaseDate: z.coerce.date().optional(),
     duration: z.coerce.number().optional(),
     genre: z.string().min(4, 'Must have genre'),

@@ -5,7 +5,7 @@ import { registerMovieSchema } from './schemas/register'
 
 export const registerMovieRoute: FastifyPluginCallbackZod = app => {
   app.post(
-    '/movies',
+    '/movies/register',
     {
       schema: registerMovieSchema,
     },
@@ -16,6 +16,7 @@ export const registerMovieRoute: FastifyPluginCallbackZod = app => {
           originalTitle,
           imageUrl,
           description,
+          budge,
           releaseDate,
           duration,
           genre,
@@ -34,6 +35,7 @@ export const registerMovieRoute: FastifyPluginCallbackZod = app => {
             imageUrl,
             description,
             releaseDate: releaseDateString,
+            budge,
             duration,
             genre,
             director,
