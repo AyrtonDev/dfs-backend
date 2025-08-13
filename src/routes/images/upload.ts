@@ -10,11 +10,7 @@ export const uploadImageRoute: FastifyPluginCallbackZod = app => {
     { preHandler: [authMiddleware] },
     async (request, reply) => {
       try {
-        const data = await request.file({
-          limits: {
-            fileSize: 5 * 1024 * 1024,
-          },
-        })
+        const data = await request.file()
 
         if (!data) {
           return reply.status(400).send({ error: 'Arquivo não enviado' })
@@ -27,19 +23,19 @@ export const uploadImageRoute: FastifyPluginCallbackZod = app => {
             .send({ error: 'Tipo de arquivo não suportado' })
         }
 
-        const fileName = data.filename
+        const fileName = `${env.R2_PREFIX}${data.filename}`
         const buffer = await data.toBuffer()
 
         await bucket.send(
           new PutObjectCommand({
-            Bucket: env.R2_PUBLIC,
+            Bucket: env.R2_NAME,
             Key: fileName,
             Body: buffer,
             ContentType: data.mimetype,
           }),
         )
 
-        const fileUrl = `${env.R2_PUBLIC}/post-movie-images/${fileName}`
+        const fileUrl = `${env.R2_PUBLIC}/${fileName}`
 
         return reply
           .status(201)
