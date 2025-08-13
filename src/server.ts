@@ -19,11 +19,13 @@ import { listImagesRoute } from './routes/images/list'
 import { registerMovieRoute } from './routes/movie/register'
 import { startCronJob } from './services/cron-email'
 import { insertTestMovie } from './services/test'
+import { updateMovieRoute } from './routes/movie/edit'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
 app.register(fastifyCors, {
   origin: 'http://localhost:5173',
+  methods: ['GET', 'POST', 'PUT'],
 })
 
 app.register(multipart, {
@@ -46,6 +48,7 @@ app.register(signUpRoute)
 app.register(loginRoute)
 app.register(moviesListRoute)
 app.register(registerMovieRoute)
+app.register(updateMovieRoute)
 app.register(genresListRoute)
 app.register(userRoute)
 app.register(movieRoute)
